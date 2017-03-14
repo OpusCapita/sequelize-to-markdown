@@ -126,7 +126,7 @@ module.exports.render = function(config)
             for(var key in entriesPerFile)
             {
                 var path = config.output.file.path + '/' + key + '.md';
-                fs.writeFileSync(path, nunjucks.render(config.input.templateFile, { entities : [ entriesPerFile[key] ] }));
+                fs.writeFileSync(path, nunjucks.render(config.input.templateFile, { entities : entriesPerFile[key] }));
             }
         }
     }
