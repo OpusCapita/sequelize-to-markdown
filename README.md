@@ -1,6 +1,6 @@
 # sequelize-to-markdown
 
-Sequelize to Markdown is a simple tool to document the data structure of [sequelize](https://www.npmjs.com/package/sequelize) models. It's output is template based to enable developers to change the output structure, style or even the output type e.g. by creating html [templates](#templating).
+Sequelize to Markdown is a simple tool to document the data structure of [sequelize](https://www.npmjs.com/package/sequelize) models. Its output is template based to enable developers to change the output structure, style or even the output type e.g. by creating html [templates](#templating).
 
 This module provides a comfortable API and a full featured command line client.
 
