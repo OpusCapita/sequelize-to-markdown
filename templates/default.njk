@@ -1,0 +1,28 @@
+# Entities
+
+{% for entity in entities %}* [{{ entity.name }}](#{{ entity.name.toLowerCase() }})
+{% endfor %}
+
+{% for entity in entities %}
+## {{ entity.name }}
+{{ entity.description }}
+
+
+##### Attributes
+
+| Name | Type | Attributes | Key Target | Description |
+|------|:----:|:----------:|:----------:|------------:|
+{% for attr in entity.attributes %}| {{ attr.name }} | {{ attr.type }}({{ attr.length }}) | {{ attr.attributeNames | join(', ') }} | {% if attr.references %} [#{{ attr.references.model }}]({{ attr.references.model.toLowerCase() }})({{ attr.references.key }}) {% endif %} | {{ attr.description }} |
+{% endfor %}
+
+{% if entity.associations %}
+##### Linked entities
+
+| Entity | Alias |  FK  | Type |
+|--------|:-----:|:----:|-----:|
+{% for assoc in entity.associations %}| [{{ assoc.name }}](#{{ assoc.name.toLowerCase() }}) | {{ assoc.alias }} | {{ assoc.foreignKey }} | {{ entity.name }} {{ assoc.type }} |
+{% endfor %}
+
+{% endif %}
+
+{% endfor %}
