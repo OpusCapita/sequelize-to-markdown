@@ -115,7 +115,13 @@ module.exports.render = function(config)
         else if(config.output.file.splitting === this.FileSplitting.AsInSource)
         {
             var entriesPerFile = { }
-            entries.forEach(entry => entriesPerFile[entry.filename] = entry);
+            entries.forEach(entry =>
+            {
+                if(entriesPerFile[entry.filename])
+                    entriesPerFile[entry.filename].push(entry)
+                else
+                    entriesPerFile[entry.filename] = [ entry ];
+            });
 
             for(var key in entriesPerFile)
             {
