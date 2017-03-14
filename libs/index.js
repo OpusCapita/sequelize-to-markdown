@@ -83,6 +83,7 @@ module.exports.DefaultConfig = {
 /**
  * Parses and renders sequelize models. Depending con the provided configuration, this method will send it's
  * output to different locations.
+ * @param {object} config - Configuration based on the options provided by [DefaultConfig](#defaultconfig).
  */
 module.exports.render = function(config)
 {
@@ -127,6 +128,7 @@ module.exports.render = function(config)
 
 /**
  * Parses sequelize models and returns a data structure with the required data.
+ * @param {object} config - Configuration based on the options provided by [DefaultConfig](#defaultconfig)
  * @returns {object}
  */
 module.exports.parse = function(config)
