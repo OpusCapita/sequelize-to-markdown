@@ -14,7 +14,7 @@ npm install -g sequelize-to-markdown
 
 This module works by including code. That means, that your model files get required like common modules. To enable sequelize-to-markdown to correctly load your models, each file included by this tool has to either provide a default function call or an init() method.
 
-```
+```JS
 module.exports = function(db, config) { ... }
  - or -
 module.exports.init = function(db, config) { ... }
@@ -22,7 +22,7 @@ module.exports.init = function(db, config) { ... }
 
 To get your models documented, you will have to provide a small amount of doc comments in your code. To start a minimal setup, you only have to provide the **@class** and **@lends** (or @memberof) tags from [JSDoc](http://usejsdoc.org/). If you add text to your class and field definitions, it will be used as descriptions in the output.
 
-```
+```JS
 /** @class MyUser */
 sequelize.define('MyUser', {
     /** @lends MyUser */
@@ -69,7 +69,7 @@ sq2md --help
 
 The config file represents all configuration options available to run the tool. These are almost the same options as shown in the [DefaultConfig](#defaultconfig) section of the API description.
 
-```
+```JS
 {
     "fieldBlacklist": [],
     "models": {
@@ -99,7 +99,7 @@ The config file represents all configuration options available to run the tool. 
 
 You might also want to use the API of this tool as a library. The library provides two methods to call. A parse() and a render() method. The parse method returns an object containing all information extracted from the source. The render() method does the same but outputs a processed template depending on the input and output settings of the passed configuration object.
 
-```
+```JS
 const sq2md = require('sequelize-to-markdown');
 
 var resultObj = sq2md.parse({ models : { paths : [ '...' ] } });
@@ -117,7 +117,7 @@ This module uses [Nunjucks](https://www.npmjs.com/package/nunjucks) in order to 
 
 #### DefaultConfig
 
-```
+```JS
 {
     fieldBlacklist : [ ],
     models : {
