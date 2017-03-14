@@ -253,7 +253,10 @@ function listAllFiles(config)
         path = pathjs.resolve(path);
         var localBlacklist = config.pathBlacklist.map(item => pathjs.isAbsolute(item) ? item : path + '/' + item);
 
-        results = results.concat(listDirectory(path, config, localBlacklist));
+        if(fs.existsSync(path) && fs.statSync(path).isFile())
+            results.push(path);
+        else
+            results = results.concat(listDirectory(path, config, localBlacklist));
     });
 
     return results;

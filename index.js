@@ -28,8 +28,8 @@ cmd.arguments('<path>')
                     initFunction : cmd.init,
                     initConfig : cmd.initConfig || sq2md.DefaultConfig.models.initConfig,
                     recursive : cmd.recursive || sq2md.DefaultConfig.models.recursive,
-                    directoryFiler : cmd.dirFilter || sq2md.DefaultConfig.models.dirFilter,
-                    fileFiler : cmd.fileFilter || sq2md.DefaultConfig.models.fileFilter
+                    directoryFilter : cmd.dirFilter || sq2md.DefaultConfig.models.dirFilter,
+                    fileFilter : cmd.fileFilter || sq2md.DefaultConfig.models.fileFilter
                 },
                 input : {
                     templateFile : cmd.template || sq2md.DefaultConfig.input.templateFile

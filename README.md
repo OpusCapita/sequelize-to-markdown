@@ -20,18 +20,20 @@ module.exports = function(db, config) { ... }
 module.exports.init = function(db, config) { ... }
 ```
 
-To get your models documented, you will have to provide a small amount of doc comments in your code. To start a minimal setup, you only have to provide the **@class** and **@lends** (or @memberof) tags from [JSDoc](http://usejsdoc.org/). If you add text to your class and field definitions, it will be used as descriptions in the output.
+To get your models documented, you will have to provide a small amount of doc comments in your code. To start a minimal setup, you only have to provide the **@class** or **@lends** (or @memberof) tags from [JSDoc](http://usejsdoc.org/). If you add text to your class and field definitions, it will be used as descriptions in the output.
 
 ```JS
 /** @class MyUser */
 sequelize.define('MyUser', {
     /** @lends MyUser */
+    /** Test comment. */
     id : {
         type : DataTypes.INTEGER(),
         allowNull : false,
         primayKey : true,
         autoIncrement : true
     },
+    /** Test name comment. */
     name : {
         type : DataTypes.STRING(128),
         allowNull : false
