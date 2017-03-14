@@ -41,7 +41,7 @@ sequelize.define('MyUser', {
 
 ### Command-line interface
 
-After installing and having your code read, you may use the command-line interface (CLI) on the terminal of your computer. The command is named "sq2md".
+After installing and having your code ready, you may use the command-line interface (CLI) on the terminal of your computer. The command is named "sq2md".
 
 ```
 sq2md --help

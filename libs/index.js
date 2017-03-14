@@ -66,7 +66,7 @@ module.exports.DefaultConfig = {
         fileFilter : new RegExp('\.js$')
     },
     input : {
-        templateFile : 'templates/default.njk'
+        templateFile : __dirname + '/../templates/default.njk'
     },
     output : {
         type : this.OutputType.ReturnOnly,
@@ -120,7 +120,7 @@ module.exports.render = function(config)
             for(var key in entriesPerFile)
             {
                 var path = config.output.file.path + '/' + key + '.md';
-                fs.writeFileSync(path, nunjucks.render(config.input.templateFile, { entities : [ entriesPerFile[entry] ] }));
+                fs.writeFileSync(path, nunjucks.render(config.input.templateFile, { entities : [ entriesPerFile[key] ] }));
             }
         }
     }
