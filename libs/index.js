@@ -62,7 +62,7 @@ module.exports.DefaultConfig = {
         recursive : false,
         initFunction : null,
         initConfig : { },
-        directoryFiler : new RegExp('/[^\/\.*]/'),
+        directoryFiler : new RegExp('[^\/\.*]'),
         fileFilter : new RegExp('\.js$')
     },
     input : {

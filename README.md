@@ -84,8 +84,8 @@ The config file represents all configuration options available to run the tool. 
         "recursive": false,
         "initFunction": null,
         "initConfig": {},
-        "directoryFiler": "/[^\/\.*]/",
-        "fileFilter": "/\.js$/"
+        "directoryFiler": "[^/.*]",
+        "fileFilter": ".js$"
     },
     "input": {
         "templateFile": "templates/default.njk"
@@ -132,8 +132,8 @@ This module uses [Nunjucks](https://www.npmjs.com/package/nunjucks) in order to 
         recursive : false,
         initFunction : null,
         initConfig : { },
-        directoryFiler : new RegExp('/[^\/\.*]/'),
-        fileFilter : new RegExp('\.js$')
+        directoryFiler : new RegExp('[^/.*]'),
+        fileFilter : new RegExp('.js$')
     },
     input : {
         templateFile : 'templates/default.njk'
