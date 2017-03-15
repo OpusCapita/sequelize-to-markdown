@@ -65,6 +65,7 @@ sq2md --help
     -c, --config <file>            Path to a JSON config file to use.
     --init <name>                  Initialization function to be called for every source file.
     --init-config <config>         JSON config to be passed to an init function.
+    --output-ext <extension>       File extension of result files if output type is file-per-class or file-per-src.
     --field-bl <field>[,<fields>]  List of fields to ignore.
     --dir-filter <regexp>          RegExp for filtering directories when looking for source files.
     --file-filter <regexp>         RegExp for filtering files when looking for models.
@@ -84,8 +85,8 @@ The config file represents all configuration options available to run the tool. 
         "recursive": false,
         "initFunction": null,
         "initConfig": {},
-        "directoryFiler": "[^/.*]",
-        "fileFilter": ".js$"
+        "directoryFiler": "[^\/\.*]",
+        "fileFilter": "\.js$"
     },
     "input": {
         "templateFile": "templates/default.njk"
@@ -94,7 +95,8 @@ The config file represents all configuration options available to run the tool. 
         "type": "StdOut",
         "file": {
             "splitting": "AllInOne",
-            "path": null
+            "path": null,
+            "extension": ".md"
         }
     },
     "sequelize": {}
@@ -132,8 +134,8 @@ This module uses [Nunjucks](https://www.npmjs.com/package/nunjucks) in order to 
         recursive : false,
         initFunction : null,
         initConfig : { },
-        directoryFiler : new RegExp('[^/.*]'),
-        fileFilter : new RegExp('.js$')
+        directoryFiler : new RegExp('[^\/\.*]'),
+        fileFilter : new RegExp('\.js$')
     },
     input : {
         templateFile : 'templates/default.njk'
@@ -142,7 +144,8 @@ This module uses [Nunjucks](https://www.npmjs.com/package/nunjucks) in order to 
         type : this.OutputType.ReturnOnly,
         file : {
             splitting : this.FileSplitting.AllInOne,
-            path : null
+            path : null,
+            extension : '.md'
         }
     },
     sequelize : {

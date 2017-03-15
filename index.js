@@ -15,6 +15,7 @@ cmd.arguments('<path>')
     .option('-c, --config <file>', 'Path to a JSON config file to use.', loadConfig)
     .option('--init <name>', 'Initialization function to be called for every source file.')
     .option('--init-config <config>', 'JSON config to be passed to an init function.', JSON.parse)
+    .option('--output-ext <extension>', 'File extension of result files if output type is file-per-class or file-per-src.', validateExt)
     .option('--field-bl <field>[,<fields>]', 'List of fields to ignore.', parseFieldList)
     .option('--dir-filter <regexp>', 'RegExp for filtering directories when looking for source files.', createRegExp)
     .option('--file-filter <regexp>', 'RegExp for filtering files when looking for models.', createRegExp)
@@ -38,7 +39,8 @@ cmd.arguments('<path>')
                     type : (cmd.outputType && cmd.outputType.type) || sq2md.OutputType.StdOut,
                     file : {
                         splitting : (cmd.outputType && cmd.outputType.splitting) || sq2md.FileSplitting.AllInOne,
-                        path : cmd.outputFile || cmd.outputPath
+                        path : cmd.outputFile || cmd.outputPath,
+                        extension : cmd.outputExt || sq2md.DefaultConfig.output.file.extension
                     }
                 },
                 sequelize : cmd.sqConfig || sq2md.DefaultConfig.sequelize
@@ -106,6 +108,11 @@ function loadConfig(path)
         config.models.fileFilter = new RegExp(config.models.fileFilter);
 
     return config;
+}
+
+function validateExt(input)
+{
+    return input.startsWith('.') ? input : '.' + input;
 }
 
 function parseFieldList(input)

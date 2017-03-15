@@ -52,6 +52,7 @@ module.exports.FileSplitting = {
  * @prop {object} output.file - Configuration for OutputType.File.
  * @prop {FileSplitting} output.file.splitting - Defines on how file output should be generated.
  * @prop {string} output.file.path - Depending on the splitting option a single file or a directory path.
+ * @prop {string} output.file.extension - Extension to add to each output file if *path* does not aleady represent a file path.
  * @prop {object}  sequelize - Configuration passed to the constructor of sequelize.
  */
 module.exports.DefaultConfig = {
@@ -72,7 +73,8 @@ module.exports.DefaultConfig = {
         type : this.OutputType.ReturnOnly,
         file : {
             splitting : this.FileSplitting.AllInOne,
-            path : null
+            path : null,
+            extension : '.md'
         }
     },
     sequelize : {
@@ -108,7 +110,7 @@ module.exports.render = function(config)
         {
             entries.forEach(entry =>
             {
-                var path = config.output.file.path + '/' + entry.name + '.md';
+                var path = config.output.file.path + '/' + entry.name + config.output.file.extension;
                 fs.writeFileSync(path, nunjucks.render(config.input.templateFile, { entities : [ entry ] }));
             });
         }
@@ -125,7 +127,7 @@ module.exports.render = function(config)
 
             for(var key in entriesPerFile)
             {
-                var path = config.output.file.path + '/' + key + '.md';
+                var path = config.output.file.path + '/' + key + config.output.file.extension;
                 fs.writeFileSync(path, nunjucks.render(config.input.templateFile, { entities : entriesPerFile[key] }));
             }
         }
