@@ -90,28 +90,30 @@ module.exports.DefaultConfig = {
 module.exports.render = function(config)
 {
     config = extend(true, { }, this.DefaultConfig, config);
+
     var entries = this.parse(config);
+    var template = nunjucks.compile(fs.readFileSync(config.input.templateFile, 'utf8'));
 
     if(config.output.type === this.OutputType.ReturnOnly)
     {
-        return nunjucks.render(config.input.templateFile, { entities : entries });
+        return template.render({ entities : entries });
     }
     else if(config.output.type === this.OutputType.StdOut)
     {
-        process.stdout.write(nunjucks.render(config.input.templateFile, { entities : entries }));
+        process.stdout.write(template.render({ entities : entries }));
     }
     else if(config.output.type === this.OutputType.File)
     {
         if(config.output.file.splitting === this.FileSplitting.AllInOne)
         {
-            fs.writeFileSync(config.output.file.path, nunjucks.render(config.input.templateFile, { entities : entries }));
+            fs.writeFileSync(config.output.file.path, template.render({ entities : entries }));
         }
         else if(config.output.file.splitting === this.FileSplitting.OnePerClass)
         {
             entries.forEach(entry =>
             {
                 var path = config.output.file.path + '/' + entry.name + config.output.file.extension;
-                fs.writeFileSync(path, nunjucks.render(config.input.templateFile, { entities : [ entry ] }));
+                fs.writeFileSync(path, template.render({ entities : [ entry ] }));
             });
         }
         else if(config.output.file.splitting === this.FileSplitting.AsInSource)
@@ -128,7 +130,7 @@ module.exports.render = function(config)
             for(var key in entriesPerFile)
             {
                 var path = config.output.file.path + '/' + key + config.output.file.extension;
-                fs.writeFileSync(path, nunjucks.render(config.input.templateFile, { entities : entriesPerFile[key] }));
+                fs.writeFileSync(path, template.render({ entities : entriesPerFile[key] }));
             }
         }
     }
@@ -175,6 +177,7 @@ module.exports.parse = function(config)
             filename : clss.meta.filename,
             path : clss.meta.path + '/' + clss.meta.filename,
             description : clss.description,
+            examples : clss.examples,
             attributes : [ ]
         };
 
