@@ -1,0 +1,16 @@
+{% for entity in entities %}
+type: object
+displayName: {{ entity.name }}
+description: |
+    {{ entity.description }}
+properties:
+    {% for attr in entity.attributes %}{{ attr.name }}:
+        type: {{ attr.type.toLowerCase() }}
+        description: |
+            {{ attr.description }}
+    {% endfor %}
+{% if entity.examples %}
+example: |
+    {{ entity.examples[0] }}
+{% endif %}
+{% endfor %}
