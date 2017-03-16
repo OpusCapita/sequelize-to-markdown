@@ -29,7 +29,7 @@ module.exports.FileSplitting = {
     AllInOne : 'AllInOne',
     /** Create one result file per class/entity. */
     OnePerClass : 'OnePerClass',
-    /** Output results the way they where defined together in the corresponding source files */
+    /** Output results the way they where defined together in the corresponding source files. */
     AsInSource : 'AsInSource'
 }
 
@@ -55,7 +55,7 @@ module.exports.FileSplitting = {
  * @prop {string} output.file.extension - Extension to add to each output file if *path* does not aleady represent a file path.
  * @prop {object}  sequelize - Configuration passed to the constructor of sequelize.
  */
-module.exports.DefaultConfig = {
+ module.exports.DefaultConfig = {
     fieldBlacklist : [ ],
     models : {
         paths : [ ],
@@ -222,8 +222,14 @@ module.exports.parse = function(config)
                     attributeNames.push('NN');
                 if(attribute.references)
                     attributeNames.push('FK');
+
                 if(attribute.defaultValue !== undefined)
-                    attributeNames.push('DEFAULT(' + attr.defaultValue + ')');
+                {
+                    if(typeof attribute.defaultValue === 'function')
+                        attributeNames.push('DEFAULT(' + attr.defaultValue.key + ')');
+                    else
+                        attributeNames.push('DEFAULT(' + attr.defaultValue + ')');
+                }
 
                 attribute['attributeNames'] = attributeNames;
                 item['attributes'].push(attribute);

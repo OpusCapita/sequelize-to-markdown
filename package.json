@@ -1,6 +1,6 @@
 {
   "name": "sequelize-to-markdown",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "Create Markdown documentations out of sequelize models.",
   "main": "libs/",
   "scripts": {
@@ -13,6 +13,7 @@
   "bin": {
     "sq2md": "./index.js"
   },
+  "preferGlobal": true,
   "keywords": [
     "sequelize",
     "markdown",
