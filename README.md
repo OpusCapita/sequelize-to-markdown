@@ -85,8 +85,8 @@ The config file represents all configuration options available to run the tool f
         "recursive": false,
         "initFunction": null,
         "initConfig": {},
-        "directoryFiler": "[^\/\.*]",
-        "fileFilter": "\.js$"
+        "directoryFiler": "[^\\/\\.*]",
+        "fileFilter": "\\.js$"
     },
     "input": {
         "templateFile": "templates/default.njk"
