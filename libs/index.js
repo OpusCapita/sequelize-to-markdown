@@ -112,7 +112,7 @@ module.exports.render = function(config)
         {
             entries.forEach(entry =>
             {
-                var path = config.output.file.path + '/' + entry.name + config.output.file.extension;
+                var path = pathjs.resolve(config.output.file.path + '/' + entry.name + config.output.file.extension);
                 fs.writeFileSync(path, template.render({ entities : [ entry ] }));
             });
         }
@@ -129,7 +129,7 @@ module.exports.render = function(config)
 
             for(var key in entriesPerFile)
             {
-                var path = config.output.file.path + '/' + key + config.output.file.extension;
+                var path = pathjs.resolve(config.output.file.path + '/' + key + config.output.file.extension);
                 fs.writeFileSync(path, template.render({ entities : entriesPerFile[key] }));
             }
         }

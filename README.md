@@ -74,7 +74,7 @@ sq2md --help
 
 #### Config file
 
-The config file represents all configuration options available to run the tool. These are almost the same options as shown in the [DefaultConfig](#defaultconfig) section of the API description.
+The config file represents all configuration options available to run the tool from command line. These are almost the same options as shown in the [DefaultConfig](#defaultconfig) section of the API description. In order to use the module programmatically, you will have to use the [DefaultConfig](#defaultconfig) settings instead.
 
 ```JS
 {
