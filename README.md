@@ -2,7 +2,7 @@
 
 Sequelize to Markdown is a simple tool to document the data structure of [sequelize](https://www.npmjs.com/package/sequelize) models. Its output is template based to enable developers to change the output structure, style or even the output type e.g. by creating html [templates](#templating).
 
-This module provides a comfortable API and a full featured command line client.
+This module provides a comfortable APIs and a full featured command line client.
 
 ### Install
 
@@ -52,7 +52,7 @@ After installing and having your code ready, you may use the command-line interf
 ```
 sq2md --help
 
-  Usage: sq2md [options] <path>
+  Usage: sq2md [options] [path]
 
   Options:
 
@@ -105,7 +105,11 @@ The config file represents all configuration options available to run the tool f
 
 ### API
 
-You might also want to use the API of this tool as a library. The library provides two methods to call. A parse() and a render() method. The parse method returns an object containing all information extracted from the source. The render() method does the same but outputs a processed template depending on the input and output settings of the passed configuration object.
+You might also want to use the API of this tool as a library. The library provides two methods to call. A parse() and a render() method.
+
+The **parse()** method returns an object containing all information extracted from the source.
+
+The **render()** method does the same but outputs a processed template depending on the input and output settings of the passed configuration object.
 
 ```JS
 const sq2md = require('sequelize-to-markdown');

@@ -6,7 +6,7 @@ const sq2md = require('./libs/index.js');
 const fs = require('fs');
 const pathjs = require('path');
 
-cmd.arguments('<path>')
+cmd.arguments('[path]')
     .option('-r, --recursive', 'Scan <path> recursively.')
     .option('-t, --template <template>', 'Template file to use for output generation.', checkTemplate)
     .option('-o, --output-type <type>', 'Where to put the output. Possible values: stdout, file, file-per-class, file-per-src.', parseOutputType)

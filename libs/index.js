@@ -83,7 +83,7 @@ module.exports.FileSplitting = {
 }
 
 /**
- * Parses and renders sequelize models. Depending con the provided configuration, this method will send it's
+ * Parses and renders sequelize models. Depending on the provided configuration, this method will send its
  * output to different locations.
  * @param {object} config - Configuration based on the options provided by [DefaultConfig](#defaultconfig).
  */
