@@ -139,7 +139,8 @@ module.exports.render = function(config)
 
             for(var key in entriesPerFile)
             {
-                var path = pathjs.resolve(config.output.file.path + '/' + key + config.output.file.extension);
+                var plainFilename = pathjs.basename(key, pathjs.extname(key));
+                var path = pathjs.resolve(config.output.file.path + '/' + plainFilename + config.output.file.extension);
                 var rendered = nunjucks.render(templateFile, { entities : entriesPerFile[key] });
 
                 fs.writeFileSync(path, (contentFilter && contentFilter(rendered)) || rendered);
