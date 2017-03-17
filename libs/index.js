@@ -92,28 +92,30 @@ module.exports.render = function(config)
     config = extend(true, { }, this.DefaultConfig, config);
 
     var entries = this.parse(config);
-    var template = nunjucks.compile(fs.readFileSync(config.input.templateFile, 'utf8'));
+    var templateFile = pathjs.resolve(config.input.templateFile);
+
+    nunjucks.configure(pathjs.dirname(templateFile));
 
     if(config.output.type === this.OutputType.ReturnOnly)
     {
-        return template.render({ entities : entries });
+        return nunjucks.render(templateFile, { entities : entries });
     }
     else if(config.output.type === this.OutputType.StdOut)
     {
-        process.stdout.write(template.render({ entities : entries }));
+        process.stdout.write(nunjucks.render(templateFile, { entities : entries }));
     }
     else if(config.output.type === this.OutputType.File)
     {
         if(config.output.file.splitting === this.FileSplitting.AllInOne)
         {
-            fs.writeFileSync(config.output.file.path, template.render({ entities : entries }));
+            fs.writeFileSync(config.output.file.path, nunjucks.render(templateFile, { entities : entries }));
         }
         else if(config.output.file.splitting === this.FileSplitting.OnePerClass)
         {
             entries.forEach(entry =>
             {
                 var path = pathjs.resolve(config.output.file.path + '/' + entry.name + config.output.file.extension);
-                fs.writeFileSync(path, template.render({ entities : [ entry ] }));
+                fs.writeFileSync(path, nunjucks.render(templateFile, { entities : [ entry ] }));
             });
         }
         else if(config.output.file.splitting === this.FileSplitting.AsInSource)
@@ -130,7 +132,7 @@ module.exports.render = function(config)
             for(var key in entriesPerFile)
             {
                 var path = pathjs.resolve(config.output.file.path + '/' + key + config.output.file.extension);
-                fs.writeFileSync(path, template.render({ entities : entriesPerFile[key] }));
+                fs.writeFileSync(path, nunjucks.render(templateFile, { entities : entriesPerFile[key] }));
             }
         }
     }
