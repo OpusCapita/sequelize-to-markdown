@@ -150,7 +150,8 @@ This module uses [Nunjucks](https://www.npmjs.com/package/nunjucks) in order to 
             splitting : this.FileSplitting.AllInOne,
             path : null,
             extension : '.md'
-        }
+        },
+        contentFilter : item => item.replace(/\n{3,}/g, "\n\n")
     },
     sequelize : {
 

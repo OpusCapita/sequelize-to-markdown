@@ -53,6 +53,7 @@ module.exports.FileSplitting = {
  * @prop {FileSplitting} output.file.splitting - Defines on how file output should be generated.
  * @prop {string} output.file.path - Depending on the splitting option a single file or a directory path.
  * @prop {string} output.file.extension - Extension to add to each output file if *path* does not aleady represent a file path.
+ * @prop {function} output.contentFilter - Provides a post-render content filter.
  * @prop {object}  sequelize - Configuration passed to the constructor of sequelize.
  */
  module.exports.DefaultConfig = {
@@ -75,7 +76,8 @@ module.exports.FileSplitting = {
             splitting : this.FileSplitting.AllInOne,
             path : null,
             extension : '.md'
-        }
+        },
+        contentFilter : item => item.replace(/\n{3,}/g, "\n\n")
     },
     sequelize : {
 
@@ -93,29 +95,35 @@ module.exports.render = function(config)
 
     var entries = this.parse(config);
     var templateFile = pathjs.resolve(config.input.templateFile);
+    var contentFilter = config.output.contentFilter;
 
     nunjucks.configure(pathjs.dirname(templateFile));
 
     if(config.output.type === this.OutputType.ReturnOnly)
     {
-        return nunjucks.render(templateFile, { entities : entries });
+        var rendered = nunjucks.render(templateFile, { entities : entries });
+        return (contentFilter && contentFilter(rendered)) || rendered;
     }
     else if(config.output.type === this.OutputType.StdOut)
     {
-        process.stdout.write(nunjucks.render(templateFile, { entities : entries }));
+        var rendered = nunjucks.render(templateFile, { entities : entries })
+        process.stdout.write((contentFilter && contentFilter(rendered)) || rendered);
     }
     else if(config.output.type === this.OutputType.File)
     {
         if(config.output.file.splitting === this.FileSplitting.AllInOne)
         {
-            fs.writeFileSync(config.output.file.path, nunjucks.render(templateFile, { entities : entries }));
+            var rendered = nunjucks.render(templateFile, { entities : entries });
+            fs.writeFileSync(config.output.file.path, (contentFilter && contentFilter(rendered)) || rendered);
         }
         else if(config.output.file.splitting === this.FileSplitting.OnePerClass)
         {
             entries.forEach(entry =>
             {
                 var path = pathjs.resolve(config.output.file.path + '/' + entry.name + config.output.file.extension);
-                fs.writeFileSync(path, nunjucks.render(templateFile, { entities : [ entry ] }));
+                var rendered = nunjucks.render(templateFile, { entities : [ entry ] });
+
+                fs.writeFileSync(path, (contentFilter && contentFilter(rendered)) || rendered);
             });
         }
         else if(config.output.file.splitting === this.FileSplitting.AsInSource)
@@ -132,7 +140,9 @@ module.exports.render = function(config)
             for(var key in entriesPerFile)
             {
                 var path = pathjs.resolve(config.output.file.path + '/' + key + config.output.file.extension);
-                fs.writeFileSync(path, nunjucks.render(templateFile, { entities : entriesPerFile[key] }));
+                var rendered = nunjucks.render(templateFile, { entities : entriesPerFile[key] });
+
+                fs.writeFileSync(path, (contentFilter && contentFilter(rendered)) || rendered);
             }
         }
     }
