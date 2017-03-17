@@ -212,8 +212,8 @@ module.exports.parse = function(config)
                     length : attr.type.options.length || '',
                     primaryKey : attr.primaryKey || false,
                     autoIncrement : attr.autoIncrement || false,
-                    allowNull : attr.allowNull || false,
-                    defaultValue : attr.defaultValue,
+                    allowNull : attr.allowNull === undefined ? true : attr.allowNull,
+                    defaultValue : attr.defaultValue && attr.defaultValue + '',
                     description : indexedMembers[longName] && indexedMembers[longName].description
                 };
 
@@ -237,12 +237,7 @@ module.exports.parse = function(config)
                     attributeNames.push('FK');
 
                 if(attribute.defaultValue !== undefined)
-                {
-                    if(typeof attribute.defaultValue === 'function')
-                        attributeNames.push('DEFAULT(' + attr.defaultValue.key + ')');
-                    else
-                        attributeNames.push('DEFAULT(' + attr.defaultValue + ')');
-                }
+                    attributeNames.push('DEFAULT(' + attr.defaultValue + ')');
 
                 attribute['attributeNames'] = attributeNames;
                 item['attributes'].push(attribute);
@@ -297,9 +292,9 @@ function listDirectory(path, config, blacklist)
     {
         var stats = fs.statSync(item);
 
-        if(stats.isFile() && blacklist.indexOf(item) === -1 && config.fileFilter.test(item))
+        if(stats.isFile() && blacklist.indexOf(item) === -1 && (!config.fileFilter || config.fileFilter.test(item)))
             results.push(item);
-        else if(stats.isDirectory() && recursive && config.dirFilter.test(item))
+        else if(stats.isDirectory() && config.recursive && (!config.dirFilter || config.dirFilter.test(item)))
             results = results.concat(listDirectory(item, config, blacklist))
     });
 
