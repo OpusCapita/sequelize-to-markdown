@@ -1,5 +1,7 @@
 # sequelize-to-markdown
 
+[![Coverage Status](https://coveralls.io/repos/github/OpusCapita/sequelize-to-markdown/badge.svg?branch=master)](https://coveralls.io/github/OpusCapita/sequelize-to-markdown?branch=master)
+
 Sequelize to Markdown is a simple tool to document the data structure of [sequelize](https://www.npmjs.com/package/sequelize) models. Its output is template based to enable developers to change the output structure, style or even the output type e.g. by creating html [templates](#templating).
 
 This module provides a comfortable APIs and a full featured command line client.
