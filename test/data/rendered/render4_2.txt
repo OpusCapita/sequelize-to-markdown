@@ -1,0 +1,20 @@
+# Entities
+
+* [Test1](#test1)
+
+## Test1
+Defines Test1.
+
+##### Attributes
+
+| Name | Type | Attributes | Key Target | Description |
+|------|:----:|:----------:|:----------:|------------:|
+| id | INTEGER() | PK, AI, NN |  | Primary identifier. |
+| label | STRING(64) | DEFAULT(Hello world!) |  | Text label. |
+
+##### Linked entities
+
+| Entity | Alias |  FK  | Type |
+|--------|:-----:|:----:|-----:|
+| [Test1Ref](#test1ref) | Test1Refs | Test1Id | Test1 HasMany |
+

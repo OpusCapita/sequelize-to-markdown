@@ -5,7 +5,7 @@
   "main": "libs/",
   "scripts": {
     "docs": "node_modules/.bin/jsdoc2md libs/index.js > wiki/Home.md",
-    "test": "./node_modules/.bin/nyc ./node_modules/.bin/mocha"
+    "test": "./node_modules/.bin/nyc --reporter=lcov ./node_modules/.bin/mocha"
   },
   "repository": {
     "type": "git",

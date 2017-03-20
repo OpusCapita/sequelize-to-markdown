@@ -1,0 +1,15 @@
+# Entities
+
+* [Test1Ref](#test1ref)
+
+## Test1Ref
+Defines Test1Ref.
+
+##### Attributes
+
+| Name | Type | Attributes | Key Target | Description |
+|------|:----:|:----------:|:----------:|------------:|
+| id | INTEGER() | PK, AI, NN |  | Primary identifier. |
+| label | STRING(128) |  |  | Text label. |
+| Test1Id | INTEGER() | FK |  [#Test1](test1)(id)  |  |
+

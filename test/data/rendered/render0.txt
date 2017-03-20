@@ -1,0 +1,16 @@
+# Entities
+
+* [Test0](#test0)
+
+## Test0
+Defines Test0.
+
+##### Attributes
+
+| Name | Type | Attributes | Key Target | Description |
+|------|:----:|:----------:|:----------:|------------:|
+| id | INTEGER() | PK, AI, NN |  | Primary identifier. |
+| label | STRING(64) | DEFAULT(Hello world!) |  | Text label. |
+| createdAt | DATE() | NN |  |  |
+| updatedAt | DATE() | NN |  |  |
+

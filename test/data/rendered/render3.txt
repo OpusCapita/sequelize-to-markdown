@@ -1,0 +1,72 @@
+# Entities
+
+* [Test0](#test0)
+* [Test1](#test1)
+* [Test1Ref](#test1ref)
+* [Test2](#test2)
+* [Test2Ref](#test2ref)
+
+## Test0
+Defines Test0.
+
+##### Attributes
+
+| Name | Type | Attributes | Key Target | Description |
+|------|:----:|:----------:|:----------:|------------:|
+| id | INTEGER() | PK, AI, NN |  | Primary identifier. |
+| label | STRING(64) | DEFAULT(Hello world!) |  | Text label. |
+
+## Test1
+Defines Test1.
+
+##### Attributes
+
+| Name | Type | Attributes | Key Target | Description |
+|------|:----:|:----------:|:----------:|------------:|
+| id | INTEGER() | PK, AI, NN |  | Primary identifier. |
+| label | STRING(64) | DEFAULT(Hello world!) |  | Text label. |
+
+##### Linked entities
+
+| Entity | Alias |  FK  | Type |
+|--------|:-----:|:----:|-----:|
+| [Test1Ref](#test1ref) | Test1Refs | Test1Id | Test1 HasMany |
+
+## Test1Ref
+Defines Test1Ref.
+
+##### Attributes
+
+| Name | Type | Attributes | Key Target | Description |
+|------|:----:|:----------:|:----------:|------------:|
+| id | INTEGER() | PK, AI, NN |  | Primary identifier. |
+| label | STRING(128) |  |  | Text label. |
+| Test1Id | INTEGER() | FK |  [#Test1](test1)(id)  |  |
+
+## Test2
+Defines Test2.
+
+##### Attributes
+
+| Name | Type | Attributes | Key Target | Description |
+|------|:----:|:----------:|:----------:|------------:|
+| id | INTEGER() | PK, AI, NN |  | Primary identifier. |
+| created | DATE() | DEFAULT(NOW) |  | Created timestamp. |
+
+##### Linked entities
+
+| Entity | Alias |  FK  | Type |
+|--------|:-----:|:----:|-----:|
+| [Test2Ref](#test2ref) | test2-table | test2id | Test2 HasOne |
+
+## Test2Ref
+Defines Test2Ref.
+
+##### Attributes
+
+| Name | Type | Attributes | Key Target | Description |
+|------|:----:|:----------:|:----------:|------------:|
+| id | INTEGER() | PK |  | Primary identifier. |
+| label | STRING(128) |  |  | Text label. |
+| test2id | INTEGER() | FK |  [#Test2](test2)(id)  |  |
+

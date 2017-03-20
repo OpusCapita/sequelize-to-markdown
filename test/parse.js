@@ -2,7 +2,7 @@
 const assert = require('assert');
 const sq2md = require('../libs/index.js');
 
-describe('Main', () =>
+describe('Parsing', () =>
 {
     describe('parse() #1', () =>
     {
@@ -127,11 +127,6 @@ describe('Main', () =>
         assert.equal(assoc.alias, 'test2-table');
         assert.equal(assoc.foreignKey, 'test2id');
         assert.equal(assoc.type, 'HasOne');
-
-        /*Test.T1.attributes.forEach(attr =>
-        {
-            console.log('assert.equal(JSON.stringify(attr[]), \''+ JSON.stringify(attr) +'\');');
-        });*/
     });
 
     describe('parse() #4', () =>
@@ -140,7 +135,8 @@ describe('Main', () =>
             fieldBlacklist : [ 'updatedAt', 'createdAt' ],
             models : {
                 paths : [ './test/data' ],
-                recursive : true
+                recursive : true,
+                pathBlacklist : [ 'special' ]
             }
         });
 
@@ -160,6 +156,25 @@ describe('Main', () =>
         assert.equal(parsed.length, 4);
     });
 
-    describe('render()', () =>
-    {});
+    describe('parse() #6', () =>
+    {
+        var parsed = sq2md.parse({
+            fieldBlacklist : [ 'updatedAt', 'createdAt' ],
+            models : {
+                paths : [ './test/data/special' ],
+                initFunction : 'init'
+            }
+        });
+
+        assert.ok(Array.isArray(parsed));
+        assert.equal(parsed.length, 1);
+
+        var Test = { T0 : parsed[0] };
+
+        assert.equal(Test.T0.name, 'Test3');
+        assert.equal(Test.T0.filename, 'Test3.js');
+        assert.ok(Test.T0.path.endsWith('/test/data/special/Test3.js'));
+        assert.equal(Test.T0.description, 'Defines Test3.');
+        assert.equal(Test.T0.attributes.length, 2);
+    });
 });

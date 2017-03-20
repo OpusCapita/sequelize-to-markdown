@@ -1,0 +1,20 @@
+# Entities
+
+* [Test2](#test2)
+
+## Test2
+Defines Test2.
+
+##### Attributes
+
+| Name | Type | Attributes | Key Target | Description |
+|------|:----:|:----------:|:----------:|------------:|
+| id | INTEGER() | PK, AI, NN |  | Primary identifier. |
+| created | DATE() | DEFAULT(NOW) |  | Created timestamp. |
+
+##### Linked entities
+
+| Entity | Alias |  FK  | Type |
+|--------|:-----:|:----:|-----:|
+| [Test2Ref](#test2ref) | test2-table | test2id | Test2 HasOne |
+
