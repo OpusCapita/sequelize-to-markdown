@@ -7,7 +7,7 @@ const sq2md = require('../libs/index.js');
 
 describe('Rendering', () =>
 {
-    describe('render() #1', () =>
+    it('render() #1', () =>
     {
         var rendered = sq2md.render({
             models : {
@@ -18,7 +18,7 @@ describe('Rendering', () =>
         assert.equal(rendered, fs.readFileSync('./test/data/rendered/render0.txt', 'utf8'));
     });
 
-    describe('render() #2', () =>
+    it('render() #2', () =>
     {
         var rendered = sq2md.render({
             fieldBlacklist : [ 'updatedAt', 'createdAt' ],
@@ -30,7 +30,7 @@ describe('Rendering', () =>
         assert.equal(rendered, fs.readFileSync('./test/data/rendered/render1.txt', 'utf8'));
     });
 
-    describe('render() #3', () =>
+    it('render() #3', () =>
     {
         var rendered = sq2md.render({
             fieldBlacklist : [ 'updatedAt', 'createdAt' ],
@@ -44,7 +44,7 @@ describe('Rendering', () =>
         assert.equal(rendered, fs.readFileSync('./test/data/rendered/render2.txt', 'utf8'));
     });
 
-    describe('render() #4', () =>
+    it('render() #4', () =>
     {
         var outPath = pathjs.join(os.tmpdir(), Math.random() + '.txt');
 
@@ -64,10 +64,10 @@ describe('Rendering', () =>
         });
 
         assert.equal(fs.readFileSync(outPath, 'utf8'), fs.readFileSync('./test/data/rendered/render3.txt', 'utf8'));
-        fs.unlink('./test/data/temp.txt');
+        fs.unlinkSync(outPath);
     });
 
-    describe('render() #5', () =>
+    it('render() #5', () =>
     {
         var outPath = pathjs.join(os.tmpdir(), Math.random() + '');
         fs.mkdirSync(outPath);
@@ -109,7 +109,7 @@ describe('Rendering', () =>
         fs.rmdirSync(outPath);
     });
 
-    describe('render() #6', () =>
+    it('render() #6', () =>
     {
         var outPath = pathjs.join(os.tmpdir(), Math.random() + '');
         fs.mkdirSync(outPath);
@@ -150,7 +150,7 @@ describe('Rendering', () =>
         fs.rmdirSync(outPath);
     });
 
-    describe('render() #7', () =>
+    it('render() #7', () =>
     {
         var rendered = sq2md.render({
             models : {

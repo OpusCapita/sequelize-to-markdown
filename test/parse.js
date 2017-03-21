@@ -4,7 +4,7 @@ const sq2md = require('../libs/index.js');
 
 describe('Parsing', () =>
 {
-    describe('parse() #1', () =>
+    it('parse() #1', () =>
     {
         var parsed = sq2md.parse({
             models : {
@@ -31,7 +31,7 @@ describe('Parsing', () =>
         assert.equal(JSON.stringify(attr[3]), '{"name":"updatedAt","longName":"Test0.updatedAt","type":"DATE","length":"","primaryKey":false,"autoIncrement":false,"allowNull":false,"attributeNames":["NN"]}');
     });
 
-    describe('parse() #2', () =>
+    it('parse() #2', () =>
     {
         var parsed = sq2md.parse({
             fieldBlacklist : [ 'updatedAt', 'createdAt' ],
@@ -79,7 +79,7 @@ describe('Parsing', () =>
         assert.equal(assoc.type, 'HasMany');
     });
 
-    describe('parse() #3', () =>
+    it('parse() #3', () =>
     {
         var parsed = sq2md.parse({
             fieldBlacklist : [ 'updatedAt', 'createdAt' ],
@@ -129,7 +129,7 @@ describe('Parsing', () =>
         assert.equal(assoc.type, 'HasOne');
     });
 
-    describe('parse() #4', () =>
+    it('parse() #4', () =>
     {
         var parsed = sq2md.parse({
             fieldBlacklist : [ 'updatedAt', 'createdAt' ],
@@ -144,7 +144,7 @@ describe('Parsing', () =>
         assert.equal(parsed.length, 5);
     });
 
-    describe('parse() #5', () =>
+    it('parse() #5', () =>
     {
         var parsed = sq2md.parse({
             models : {
@@ -156,7 +156,7 @@ describe('Parsing', () =>
         assert.equal(parsed.length, 4);
     });
 
-    describe('parse() #6', () =>
+    it('parse() #6', () =>
     {
         var parsed = sq2md.parse({
             fieldBlacklist : [ 'updatedAt', 'createdAt' ],
