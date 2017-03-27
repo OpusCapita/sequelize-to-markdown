@@ -73,6 +73,7 @@ sq2md --help
     --field-bl <field>[,<fields>]  List of fields to ignore.
     --dir-filter <regexp>          RegExp for filtering directories when looking for source files.
     --file-filter <regexp>         RegExp for filtering files when looking for models.
+    --path-bl <path>[,<path>]      List of paths to ignore.
     --sq-config <config>           JSON config to be passed to sequelize.
 ```
 

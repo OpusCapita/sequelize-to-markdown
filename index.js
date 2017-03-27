@@ -19,6 +19,7 @@ cmd.arguments('[path]')
     .option('--field-bl <field>[,<fields>]', 'List of fields to ignore.', parseFieldList)
     .option('--dir-filter <regexp>', 'RegExp for filtering directories when looking for source files.', createRegExp)
     .option('--file-filter <regexp>', 'RegExp for filtering files when looking for models.', createRegExp)
+    .option('--path-bl <path>[,<path>]', 'List of paths to ignore.', parseFieldList)
     .option('--sq-config <config>', 'JSON config to be passed to sequelize.', JSON.parse)
     .action((path, cmd) =>
     {
@@ -26,6 +27,7 @@ cmd.arguments('[path]')
                 fieldBlacklist : cmd.fieldBl || [ ],
                 models : {
                     paths : [ path ],
+                    pathBlacklist : cmd.pathBl || sq2md.DefaultConfig.models.pathBlacklist,
                     initFunction : cmd.init,
                     initConfig : cmd.initConfig || sq2md.DefaultConfig.models.initConfig,
                     recursive : cmd.recursive || sq2md.DefaultConfig.models.recursive,
