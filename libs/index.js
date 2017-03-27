@@ -220,7 +220,7 @@ module.exports.parse = function(config)
                 if(attr.references)
                 {
                     attribute['references'] = {
-                        model : modelNamePluralMap[attr.references.model],
+                        model : modelNamePluralMap[attr.references.model] || attr.references.model,
                         key : attr.references.key
                     }
                 }

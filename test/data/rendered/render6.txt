@@ -1,0 +1,30 @@
+# Entities
+
+* [Test4](#test4)
+* [Test4Ref](#test4ref)
+
+## Test4
+Defines Test4.
+
+##### Attributes
+
+| Name | Type | Attributes | Key Target | Description |
+|------|:----:|:----------:|:----------:|------------:|
+| id | INTEGER() | PK, AI, NN |  | Primary identifier. |
+| label | STRING(64) | DEFAULT(Hello world!) |  | Text label. |
+| createdAt | DATE() | NN |  |  |
+| updatedAt | DATE() | NN |  |  |
+
+## Test4Ref
+Defines Test4Ref.
+
+##### Attributes
+
+| Name | Type | Attributes | Key Target | Description |
+|------|:----:|:----------:|:----------:|------------:|
+| id | INTEGER() | PK, AI, NN |  | Primary identifier. |
+| label | STRING(128) |  |  | Text label. |
+| foreignId | INTEGER() | NN, FK |  [#Test4](test4)(id)  |  |
+| createdAt | DATE() | NN |  |  |
+| updatedAt | DATE() | NN |  |  |
+

@@ -37,7 +37,7 @@ describe('Rendering', () =>
             models : {
                 paths : [ './test/data' ],
                 recursive : true,
-                pathBlacklist : [ 'special' ]
+                pathBlacklist : [ 'special', 'Test4.js' ]
             }
         });
 
@@ -53,7 +53,7 @@ describe('Rendering', () =>
             models : {
                 paths : [ './test/data' ],
                 recursive : true,
-                pathBlacklist : [ 'special' ]
+                pathBlacklist : [ 'special', 'Test4.js' ]
             },
             output : {
                 type : sq2md.OutputType.File,
@@ -77,7 +77,7 @@ describe('Rendering', () =>
             models : {
                 paths : [ './test/data' ],
                 recursive : true,
-                pathBlacklist : [ 'special' ]
+                pathBlacklist : [ 'special', 'Test4.js' ]
             },
             output : {
                 type : sq2md.OutputType.File,
@@ -119,7 +119,7 @@ describe('Rendering', () =>
             models : {
                 paths : [ './test/data' ],
                 recursive : true,
-                pathBlacklist : [ 'special' ]
+                pathBlacklist : [ 'special', 'Test4.js' ]
             },
             output : {
                 type : sq2md.OutputType.File,
@@ -131,7 +131,6 @@ describe('Rendering', () =>
             }
         });
 
-        return;
         var files = {
             'Test0.txt' : 'render5_1.txt',
             'Test1.txt' : 'render5_2.txt',
@@ -160,5 +159,16 @@ describe('Rendering', () =>
                 type : sq2md.OutputType.StdOut
             }
         });
+    });
+
+    it('render() #8', () =>
+    {
+        var rendered = sq2md.render({
+            models : {
+                paths : [ './test/data/Test4.js' ]
+            }
+        });
+
+        assert.equal(rendered, fs.readFileSync('./test/data/rendered/render6.txt', 'utf8'));
     });
 });
