@@ -235,7 +235,7 @@ module.exports.parse = function(config)
                     name : attr.fieldName,
                     longName : longName,
                     type : attr.type.key,
-                    length : attr.type.options.length || '',
+                    length : (attr.type.options && attr.type.options.length) || '',
                     primaryKey : attr.primaryKey || false,
                     autoIncrement : attr.autoIncrement || false,
                     allowNull : attr.allowNull === undefined ? true : attr.allowNull,
