@@ -6,6 +6,7 @@ const pathjs = require('path');
 const extend = require('extend');
 const jsdoc = require('jsdoc-api');
 const nunjucks = require('nunjucks');
+const helper = require('./helper.js');
 
 /**
  * Enumeration providing a list of all built-in output types.
@@ -157,6 +158,7 @@ module.exports.render = function(config)
 module.exports.parse = function(config)
 {
     config = extend(true, { }, this.DefaultConfig, config);
+    var models = config.models;
 
     var modelNamePluralMap = { };
     var sqOpts = extend(true, config.sequelize, {
@@ -165,16 +167,40 @@ module.exports.parse = function(config)
         }
     });
 
+    var allFiles = helper.listFiles(models.paths, models.recursive, models.fileFilter, models.directoryFilter);
+
     const db = new Sequelize('sqlite://', sqOpts);
-    const allFiles = listAllFiles(config.models);
     const ignoreFields = config.fieldBlacklist;
     const initFunction = config.models.initFunction;
     const initConfig = config.models.initConfig;
 
+    if(models.pathBlacklist)
+        allFiles = helper.filterBlacklist(allFiles, models.pathBlacklist);
+
     if(initFunction)
-        allFiles.forEach(file => require(file)[initFunction](db, initConfig));
+    {
+        allFiles.forEach(file =>
+        {
+            var module = require(file);
+
+            if(typeof module[initFunction] !== 'function')
+                throw new Error(`Module does not provide initializer function ${initFunction}: ` + file);
+
+            module[initFunction](db, initConfig);
+        });
+    }
     else
-        allFiles.forEach(file => require(file)(db, initConfig));
+    {
+        allFiles.forEach(file =>
+        {
+            var module = require(file);
+
+            if(typeof module !== 'function')
+                throw new Error('Module does not provide default initializer: ' + file);
+
+            module(db, initConfig);
+        });
+    }
 
     const explained = jsdoc.explainSync({ caching : false, files : allFiles });
     const allClasses = explained.filter(item => item.kind === 'class' && item.access != 'private');
@@ -261,42 +287,4 @@ module.exports.parse = function(config)
 
         return item;
     });
-}
-
-function listAllFiles(config)
-{
-    var results = [ ];
-
-    config.paths.forEach(path =>
-    {
-        path = pathjs.resolve(path);
-        var localBlacklist = config.pathBlacklist.map(item => pathjs.isAbsolute(item) ? item : path + '/' + item);
-
-        if(fs.existsSync(path) && fs.statSync(path).isFile())
-            results.push(path);
-        else
-            results = results.concat(listDirectory(path, config, localBlacklist));
-    });
-
-    return results;
-}
-
-function listDirectory(path, config, blacklist)
-{
-    var results = [ ];
-
-    if(blacklist.indexOf(path) > -1)
-        return results;
-
-    fs.readdirSync(path).map(item => path + '/' + item).forEach(item =>
-    {
-        var stats = fs.statSync(item);
-
-        if(stats.isFile() && blacklist.indexOf(item) === -1 && (!config.fileFilter || config.fileFilter.test(item)))
-            results.push(item);
-        else if(stats.isDirectory() && config.recursive && (!config.dirFilter || config.dirFilter.test(item)))
-            results = results.concat(listDirectory(item, config, blacklist))
-    });
-
-    return results;
 }

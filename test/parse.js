@@ -4,6 +4,77 @@ const sq2md = require('../libs/index.js');
 
 describe('Parsing', () =>
 {
+    it('parse() error #1', () =>
+    {
+        var error;
+
+        try
+        {
+            var parsed = sq2md.parse({
+                models : {
+                    paths : [ './test/data/InVaLiD' ]
+                }
+            });
+        }
+        catch(e)
+        {
+            error = e;
+        }
+        finally
+        {
+            assert.notEqual(error, undefined);
+        }
+    });
+
+    it('parse() error #2', () =>
+    {
+        var error;
+
+        try
+        {
+            var parsed = sq2md.parse({
+                fieldBlacklist : [ 'updatedAt', 'createdAt' ],
+                models : {
+                    paths : [ './test/data' ],
+                    recursive : true
+                }
+            });
+        }
+        catch(e)
+        {
+            error = e;
+        }
+        finally
+        {
+            assert.notEqual(error, undefined);
+        }
+    });
+
+    it('parse() error #3', () =>
+    {
+        var error;
+
+        try
+        {
+            var parsed = sq2md.parse({
+                fieldBlacklist : [ 'updatedAt', 'createdAt' ],
+                models : {
+                    paths : [ './test/data' ],
+                    recursive : true,
+                    initFunction : 'InVaLiD'
+                }
+            });
+        }
+        catch(e)
+        {
+            error = e;
+        }
+        finally
+        {
+            assert.notEqual(error, undefined);
+        }
+    });
+
     it('parse() #1', () =>
     {
         var parsed = sq2md.parse({
