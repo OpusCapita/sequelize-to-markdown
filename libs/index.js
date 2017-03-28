@@ -98,7 +98,7 @@ module.exports.render = function(config)
     var templateFile = pathjs.resolve(config.input.templateFile);
     var contentFilter = config.output.contentFilter;
 
-    nunjucks.configure(pathjs.dirname(templateFile));
+    nunjucks.configure(pathjs.dirname(templateFile), { autoescape : false });
 
     if(config.output.type === this.OutputType.ReturnOnly)
     {
@@ -239,9 +239,17 @@ module.exports.parse = function(config)
                     primaryKey : attr.primaryKey || false,
                     autoIncrement : attr.autoIncrement || false,
                     allowNull : attr.allowNull === undefined ? true : attr.allowNull,
-                    defaultValue : attr.defaultValue && attr.defaultValue + '',
+                    defaultValue : undefined,
                     description : indexedMembers[longName] && indexedMembers[longName].description
                 };
+
+                if(attr.defaultValue)
+                {
+                    if(typeof attr.defaultValue === 'function')
+                        attribute['defaultValue'] = attr.defaultValue.key;
+                    else
+                        attribute['defaultValue'] = attr.defaultValue + '';
+                }
 
                 if(attr.references)
                 {
