@@ -12,7 +12,7 @@
 
 | Name | Type | Attributes | Key Target | Description |
 |------|:----:|:----------:|:----------:|------------:|
-{% for attr in entity.attributes %}| {{ attr.name }} | {{ attr.type }}({{ attr.length }}) | {{ attr.attributeNames | join(', ') }} | {% if attr.references %} [#{{ attr.references.model }}]({{ attr.references.model.toLowerCase() }})({{ attr.references.key }}) {% endif %} | {{ attr.description }} |
+{% for attr in entity.attributes %}| {{ attr.name }} | {{ attr.type }}({{ attr.length }}) | {{ attr.attributeNames | join(', ') }} | {% if attr.references %} [{{ attr.references.model }}](#{{ attr.references.model.toLowerCase() }})({{ attr.references.key }}) {% endif %} | {{ attr.description }} |
 {% endfor %}
 
 {% if entity.associations %}
