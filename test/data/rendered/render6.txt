@@ -24,7 +24,7 @@ Defines Test4Ref.
 |------|:----:|:----------:|:----------:|------------:|
 | id | INTEGER() | PK, AI, NN |  | Primary identifier. |
 | label | STRING(128) |  |  | Text label. |
-| foreignId | INTEGER() | NN, FK |  [#Test4](test4)(id)  |  |
+| foreignId | INTEGER() | NN, FK |  [Test4](#test4)(id)  |  |
 | createdAt | DATE() | NN |  |  |
 | updatedAt | DATE() | NN |  |  |
 

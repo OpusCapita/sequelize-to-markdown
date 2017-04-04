@@ -41,7 +41,7 @@ Defines Test1Ref.
 |------|:----:|:----------:|:----------:|------------:|
 | id | INTEGER() | PK, AI, NN |  | Primary identifier. |
 | label | STRING(128) |  |  | Text label. |
-| Test1Id | INTEGER() | FK |  [#Test1](test1)(id)  |  |
+| Test1Id | INTEGER() | FK |  [Test1](#test1)(id)  |  |
 
 ## Test2
 Defines Test2.
@@ -68,5 +68,5 @@ Defines Test2Ref.
 |------|:----:|:----------:|:----------:|------------:|
 | id | INTEGER() | PK |  | Primary identifier. |
 | label | STRING(128) |  |  | Text label. |
-| test2id | INTEGER() | FK |  [#Test2](test2)(id)  |  |
+| test2id | INTEGER() | FK |  [Test2](#test2)(id)  |  |
 

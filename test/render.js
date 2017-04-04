@@ -119,7 +119,8 @@ describe('Rendering', () =>
             models : {
                 paths : [ './test/data' ],
                 recursive : true,
-                pathBlacklist : [ 'special', 'Test4.js' ]
+                pathBlacklist : [ 'special', 'Test4.js' ],
+                directoryFilter : null
             },
             output : {
                 type : sq2md.OutputType.File,

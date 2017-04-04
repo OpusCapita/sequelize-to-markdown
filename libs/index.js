@@ -65,7 +65,7 @@ module.exports.FileSplitting = {
         recursive : false,
         initFunction : null,
         initConfig : { },
-        directoryFiler : new RegExp('[^\/\.*]'),
+        directoryFilter : new RegExp('[^\/\.*]'),
         fileFilter : new RegExp('\.js$')
     },
     input : {

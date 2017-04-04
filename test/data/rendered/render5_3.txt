@@ -28,5 +28,5 @@ Defines Test2Ref.
 |------|:----:|:----------:|:----------:|------------:|
 | id | INTEGER() | PK |  | Primary identifier. |
 | label | STRING(128) |  |  | Text label. |
-| test2id | INTEGER() | FK |  [#Test2](test2)(id)  |  |
+| test2id | INTEGER() | FK |  [Test2](#test2)(id)  |  |
 

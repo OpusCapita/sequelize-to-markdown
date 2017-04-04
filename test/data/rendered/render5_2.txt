@@ -28,5 +28,5 @@ Defines Test1Ref.
 |------|:----:|:----------:|:----------:|------------:|
 | id | INTEGER() | PK, AI, NN |  | Primary identifier. |
 | label | STRING(128) |  |  | Text label. |
-| Test1Id | INTEGER() | FK |  [#Test1](test1)(id)  |  |
+| Test1Id | INTEGER() | FK |  [Test1](#test1)(id)  |  |
 

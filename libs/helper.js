@@ -48,7 +48,7 @@ module.exports.listFiles = function(path, recursive, fileFilter, dirFilter)
             {
                 results = fs.readdirSync(fullPath)
                     .map(item => pathJs.join(fullPath, item))
-                    .filter(item => !dirFilter || dirFilter.test    (item));
+                    .filter(item => !dirFilter || dirFilter.test(item));
             }
         }
         else if(!stats)
