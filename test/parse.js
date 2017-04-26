@@ -238,14 +238,22 @@ describe('Parsing', () =>
         });
 
         assert.ok(Array.isArray(parsed));
-        assert.equal(parsed.length, 1);
+        assert.equal(parsed.length, 2);
 
-        var Test = { T0 : parsed[0] };
+        var Test = { T0 : parsed[0], T1 : parsed[1] };
 
         assert.equal(Test.T0.name, 'Test3');
         assert.equal(Test.T0.filename, 'Test3.js');
         assert.ok(Test.T0.path.endsWith('/test/data/special/Test3.js'));
         assert.equal(Test.T0.description, 'Defines Test3.');
         assert.equal(Test.T0.attributes.length, 2);
+
+        assert.equal(Test.T1.attributes.length, 3);
+        assert.equal(Test.T1.attributes[0].name, 'id');
+        assert.equal(Test.T1.attributes[0].description, undefined);
+        assert.equal(Test.T1.attributes[1].name, 'label');
+        assert.equal(Test.T1.attributes[1].description, undefined);
+        assert.equal(Test.T1.attributes[1].defaultValue, 'function');
+        assert.equal(Test.T1.attributes[2].defaultValue, 'NOW');
     });
 });

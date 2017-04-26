@@ -222,76 +222,79 @@ module.exports.parse = function(config)
 
         const model = db.models[item.name];
 
-        for(var key in model.rawAttributes)
+        if(model)
         {
-            const attr = model.rawAttributes[key];
-            const longName = model.name + '.' + attr.fieldName;
-            const processField = ignoreFields.indexOf(attr.fieldName) === -1;
-            const memberIsPublic = !indexedMembers[longName] || indexedMembers[longName].access != 'private';
-
-            if(processField && memberIsPublic)
+            for(var key in model.rawAttributes)
             {
-                var attribute = {
-                    name : attr.fieldName,
-                    longName : longName,
-                    type : attr.type.key,
-                    length : (attr.type.options && attr.type.options.length) || '',
-                    primaryKey : attr.primaryKey || false,
-                    autoIncrement : attr.autoIncrement || false,
-                    allowNull : attr.allowNull === undefined ? true : attr.allowNull,
-                    defaultValue : undefined,
-                    description : indexedMembers[longName] && indexedMembers[longName].description
-                };
+                const attr = model.rawAttributes[key];
+                const longName = model.name + '.' + attr.fieldName;
+                const processField = ignoreFields.indexOf(attr.fieldName) === -1;
+                const memberIsPublic = !indexedMembers[longName] || indexedMembers[longName].access != 'private';
 
-                if(attr.defaultValue)
+                if(processField && memberIsPublic)
                 {
-                    if(typeof attr.defaultValue === 'function')
-                        attribute['defaultValue'] = attr.defaultValue.key;
-                    else
-                        attribute['defaultValue'] = attr.defaultValue + '';
-                }
+                    var attribute = {
+                        name : attr.fieldName,
+                        longName : longName,
+                        type : attr.type.key,
+                        length : (attr.type.options && attr.type.options.length) || '',
+                        primaryKey : attr.primaryKey || false,
+                        autoIncrement : attr.autoIncrement || false,
+                        allowNull : attr.allowNull === undefined ? true : attr.allowNull,
+                        defaultValue : undefined,
+                        description : indexedMembers[longName] && indexedMembers[longName].description
+                    };
 
-                if(attr.references)
-                {
-                    attribute['references'] = {
-                        model : modelNamePluralMap[attr.references.model] || attr.references.model,
-                        key : attr.references.key
+                    if(attr.defaultValue)
+                    {
+                        if(typeof attr.defaultValue === 'function')
+                            attribute['defaultValue'] = attr.defaultValue.key || 'function';
+                        else
+                            attribute['defaultValue'] = attr.defaultValue + '';
                     }
+
+                    if(attr.references)
+                    {
+                        attribute['references'] = {
+                            model : modelNamePluralMap[attr.references.model] || attr.references.model,
+                            key : attr.references.key
+                        }
+                    }
+
+                    var attributeNames = [ ];
+
+                    if(attribute.primaryKey)
+                        attributeNames.push('PK');
+                    if(attribute.autoIncrement)
+                        attributeNames.push('AI');
+                    if(!attribute.allowNull)
+                        attributeNames.push('NN');
+                    if(attribute.references)
+                        attributeNames.push('FK');
+
+                    if(attribute.defaultValue !== undefined)
+                        attributeNames.push('DEFAULT(' + attr.defaultValue + ')');
+
+                    attribute['attributeNames'] = attributeNames;
+                    item['attributes'].push(attribute);
                 }
-
-                var attributeNames = [ ];
-
-                if(attribute.primaryKey)
-                    attributeNames.push('PK');
-                if(attribute.autoIncrement)
-                    attributeNames.push('AI');
-                if(!attribute.allowNull)
-                    attributeNames.push('NN');
-                if(attribute.references)
-                    attributeNames.push('FK');
-
-                if(attribute.defaultValue !== undefined)
-                    attributeNames.push('DEFAULT(' + attr.defaultValue + ')');
-
-                attribute['attributeNames'] = attributeNames;
-                item['attributes'].push(attribute);
             }
+
+            for(var key in model.associations)
+            {
+                var assoc = model.associations[key];
+                var name = assoc.target.name;
+                var alias = assoc.as;
+
+                item['associations'] = item['associations'] || [ ];
+                item['associations'].push({
+                    name : name,
+                    alias : alias,
+                    foreignKey : assoc.foreignKey,
+                    type : assoc.associationType
+                })
+            };
         }
-
-        for(var key in model.associations)
-        {
-            var assoc = model.associations[key];
-            var name = assoc.target.name;
-            var alias = assoc.as;
-
-            item['associations'] = item['associations'] || [ ];
-            item['associations'].push({
-                name : name,
-                alias : alias,
-                foreignKey : assoc.foreignKey,
-                type : assoc.associationType
-            })
-        };
 
         return item;
     });
