@@ -4,9 +4,10 @@
   "description": "Create Markdown documentations out of sequelize models.",
   "main": "libs/",
   "scripts": {
-    "docs": "node_modules/.bin/jsdoc2md libs/index.js > wiki/Home.md",
+    "doc": "node_modules/.bin/jsdoc2md libs/index.js > wiki/Home.md",
     "test": "./node_modules/.bin/nyc --reporter=lcov ./node_modules/.bin/mocha",
-    "coverage": "npm run test && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+    "test-coverage": "node_modules/.bin/nyc --reporter=lcov node_modules/.bin/mocha",
+    "upload-coverage": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },
   "repository": {
     "type": "git",
