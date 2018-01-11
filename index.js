@@ -5,6 +5,7 @@ const cmd = require('commander');
 const sq2md = require('./libs/index.js');
 const fs = require('fs');
 const pathjs = require('path');
+const extend = require('extend');
 
 cmd.arguments('[path]')
     .option('-r, --recursive', 'Scan <path> recursively.')
@@ -23,7 +24,7 @@ cmd.arguments('[path]')
     .option('--sq-config <config>', 'JSON config to be passed to sequelize.', JSON.parse)
     .action((path, cmd) =>
     {
-        var config = cmd.config || {
+        const config = cmd.config || {
                 fieldBlacklist : cmd.fieldBl || [ ],
                 models : {
                     paths : [ path ],
@@ -47,6 +48,16 @@ cmd.arguments('[path]')
                 },
                 sequelize : cmd.sqConfig || sq2md.DefaultConfig.sequelize
             }
+
+        const addConfig = {
+                "plugins": ["node_modules/jsdoc-babel"],
+                "babel": {
+                    "presets": [ "es2015" ],
+                    "plugins": [ "transform-async-to-generator" ]
+                }
+        };
+
+        extend(true, config, addConfig)
 
         sq2md.render(config);
     })
@@ -102,7 +113,7 @@ function loadConfig(path)
     if(!fs.existsSync(path))
         throw new Error('Config file does not exist: ' + path);
 
-    var config = JSON.parse(fs.readFileSync(path));
+    const config = JSON.parse(fs.readFileSync(path));
 
     if(config.models.directoryFiler)
         config.models.directoryFiler = new RegExp(config.models.directoryFiler);
