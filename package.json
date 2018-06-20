@@ -29,13 +29,13 @@
     "extend": "^3.0.0",
     "jsdoc-api": "^4.0.0",
     "nunjucks": "^3.0.0",
-    "sequelize": "^3.30.2",
-    "sqlite3": "^3.1.8"
+    "sequelize": "^4.37.10",
+    "sqlite3": "^4.0.0"
   },
   "devDependencies": {
-    "coveralls": "^2.13.3",
+    "coveralls": "^3.0.1",
     "jsdoc-to-markdown": "^3.0.4",
-    "mocha": "^3.5.3",
-    "nyc": "^10.3.2"
+    "mocha": "^5.2.0",
+    "nyc": "^13.0.0"
   }
 }
