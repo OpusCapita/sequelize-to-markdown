@@ -2,7 +2,7 @@
 
 const Sequelize = require('sequelize');
 const fs = require('fs');
-const pathjs = require('path');
+const pathJs = require('path');
 const extend = require('extend');
 const jsdoc = require('jsdoc-api');
 const nunjucks = require('nunjucks');
@@ -95,10 +95,10 @@ module.exports.render = function(config)
     config = extend(true, { }, this.DefaultConfig, config);
 
     var entries = this.parse(config);
-    var templateFile = pathjs.resolve(config.input.templateFile);
+    var templateFile = pathJs.resolve(config.input.templateFile);
     var contentFilter = config.output.contentFilter;
 
-    nunjucks.configure(pathjs.dirname(templateFile), { autoescape : false });
+    nunjucks.configure(pathJs.dirname(templateFile), { autoescape : false });
 
     if(config.output.type === this.OutputType.ReturnOnly)
     {
@@ -115,15 +115,17 @@ module.exports.render = function(config)
         if(config.output.file.splitting === this.FileSplitting.AllInOne)
         {
             var rendered = nunjucks.render(templateFile, { entities : entries });
+            helper.mkdirp(config.output.file.path);
             fs.writeFileSync(config.output.file.path, (contentFilter && contentFilter(rendered)) || rendered);
         }
         else if(config.output.file.splitting === this.FileSplitting.OnePerClass)
         {
             entries.forEach(entry =>
             {
-                var path = pathjs.resolve(config.output.file.path + '/' + entry.name + config.output.file.extension);
+                var path = pathJs.resolve(config.output.file.path + pathJs.sep + entry.name + config.output.file.extension);
                 var rendered = nunjucks.render(templateFile, { entities : [ entry ] });
 
+                helper.mkdirp(path);
                 fs.writeFileSync(path, (contentFilter && contentFilter(rendered)) || rendered);
             });
         }
@@ -140,10 +142,11 @@ module.exports.render = function(config)
 
             for(var key in entriesPerFile)
             {
-                var plainFilename = pathjs.basename(key, pathjs.extname(key));
-                var path = pathjs.resolve(config.output.file.path + '/' + plainFilename + config.output.file.extension);
+                var plainFilename = pathJs.basename(key, pathJs.extname(key));
+                var path = pathJs.resolve(config.output.file.path + pathJs.sep + plainFilename + config.output.file.extension);
                 var rendered = nunjucks.render(templateFile, { entities : entriesPerFile[key] });
 
+                helper.mkdirp(path);
                 fs.writeFileSync(path, (contentFilter && contentFilter(rendered)) || rendered);
             }
         }
