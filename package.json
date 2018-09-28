@@ -1,6 +1,6 @@
 {
   "name": "sequelize-to-markdown",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "Create Markdown documentations out of sequelize models.",
   "main": "libs/",
   "scripts": {

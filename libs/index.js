@@ -115,9 +115,9 @@ module.exports.render = function(config)
         if(config.output.file.splitting === this.FileSplitting.AllInOne)
         {
             var rendered = nunjucks.render(templateFile, { entities : entries });
-            
+
             helper.mkdirp(config.output.file.path);
-            
+
             fs.writeFileSync(config.output.file.path, (contentFilter && contentFilter(rendered)) || rendered);
         }
         else if(config.output.file.splitting === this.FileSplitting.OnePerClass)
@@ -128,7 +128,7 @@ module.exports.render = function(config)
                 var rendered = nunjucks.render(templateFile, { entities : [ entry ] });
 
                 helper.mkdirp(path);
-                
+
                 fs.writeFileSync(path, (contentFilter && contentFilter(rendered)) || rendered);
             });
         }
@@ -150,7 +150,7 @@ module.exports.render = function(config)
                 var rendered = nunjucks.render(templateFile, { entities : entriesPerFile[key] });
 
                 helper.mkdirp(path);
-                
+
                 fs.writeFileSync(path, (contentFilter && contentFilter(rendered)) || rendered);
             }
         }
@@ -254,7 +254,7 @@ module.exports.parse = function(config)
 
                     if(attr.defaultValue)
                     {
-                        if(typeof attr.defaultValue === 'function')
+                        if(typeof(attr.defaultValue) === 'function')
                             attribute['defaultValue'] = attr.defaultValue.key || 'function';
                         else
                             attribute['defaultValue'] = attr.defaultValue + '';
@@ -280,7 +280,7 @@ module.exports.parse = function(config)
                         attributeNames.push('FK');
 
                     if(attribute.defaultValue !== undefined)
-                        attributeNames.push('DEFAULT(' + attr.defaultValue + ')');
+                        attributeNames.push('DEFAULT(' + attribute['defaultValue'] + ')');
 
                     attribute['attributeNames'] = attributeNames;
                     item['attributes'].push(attribute);
