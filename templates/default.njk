@@ -10,9 +10,9 @@
 
 ##### Attributes
 
-| Name | Type | Attributes | Key Target | Description |
-|------|:----:|:----------:|:----------:|------------:|
-{% for attr in entity.attributes %}| {{ attr.name }} | {{ attr.type }}({{ attr.length }}) | {{ attr.attributeNames | join(', ') }} | {% if attr.references %} [{{ attr.references.model }}](#{{ attr.references.model.toLowerCase() }})({{ attr.references.key }}) {% endif %} | {{ attr.description }} |
+| Name | Type | Attributes | Description |
+|------|:----:|:----------:|------------:|
+{% for attr in entity.attributes %}| {% if attr.attributeNames.includes('PK') %}**{{ attr.name }}**{% else %}{{ attr.name }}{% endif %} | `{{ attr.type }}({{ attr.length }})` | `{% if attr.attributeNames.length === 0 %}-{% endif %}{{ attr.attributeNames | join(', ') }}` | {{ attr.description }} |
 {% endfor %}
 
 {% if entity.associations %}
@@ -20,7 +20,7 @@
 
 | Entity | Alias |  FK  | Type |
 |--------|:-----:|:----:|-----:|
-{% for assoc in entity.associations %}| [{{ assoc.name }}](#{{ assoc.name.toLowerCase() }}) | {{ assoc.alias }} | {{ assoc.foreignKey }} | {{ entity.name }} {{ assoc.type }} |
+{% for assoc in entity.associations %}| [{{ assoc.name }}](#{{ assoc.name.toLowerCase() }}) | {{ assoc.alias }} | {{ assoc.foreignKey }} | `{{ entity.name }}` -> `{{ assoc.type }}` |
 {% endfor %}
 
 {% endif %}
