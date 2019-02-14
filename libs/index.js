@@ -252,6 +252,14 @@ module.exports.parse = function(config)
                         description : indexedMembers[longName] && indexedMembers[longName].description
                     };
 
+                    if(indexedMembers[longName] && indexedMembers[longName].tags)
+                    {
+                        for (const tag of indexedMembers[longName].tags)
+                        {
+                          attribute[tag.title] = tag.value;
+                        }
+                    }
+
                     if(attr.defaultValue)
                     {
                         if(typeof(attr.defaultValue) === 'function')
