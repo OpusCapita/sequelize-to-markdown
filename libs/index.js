@@ -249,14 +249,15 @@ module.exports.parse = function(config)
                         autoIncrement : attr.autoIncrement || false,
                         allowNull : attr.allowNull === undefined ? true : attr.allowNull,
                         defaultValue : undefined,
-                        description : indexedMembers[longName] && indexedMembers[longName].description
+                        description : indexedMembers[longName] && indexedMembers[longName].description,
+                        tags: {}
                     };
 
                     if(indexedMembers[longName] && indexedMembers[longName].tags)
                     {
                         for (const tag of indexedMembers[longName].tags)
                         {
-                          attribute[tag.title] = tag.value;
+                          attribute.tags[tag.title] = tag.value;
                         }
                     }
 
