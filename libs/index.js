@@ -222,7 +222,7 @@ module.exports.parse = function(config)
             name : clss.longname,
             filename : clss.meta.filename,
             path : clss.meta.path + '/' + clss.meta.filename,
-            description : clss.description,
+            description : helper.prepareComment(clss.description),
             examples : clss.examples,
             attributes : [ ]
         };
@@ -249,7 +249,7 @@ module.exports.parse = function(config)
                         autoIncrement : attr.autoIncrement || false,
                         allowNull : attr.allowNull === undefined ? true : attr.allowNull,
                         defaultValue : undefined,
-                        description : indexedMembers[longName] && indexedMembers[longName].description,
+                        description : indexedMembers[longName] && helper.prepareComment(indexedMembers[longName].description),
                         tags: {}
                     };
 
@@ -257,7 +257,7 @@ module.exports.parse = function(config)
                     {
                         for (const tag of indexedMembers[longName].tags)
                         {
-                          attribute.tags[tag.title] = tag.value;
+                          attribute.tags[tag.title] = helper.prepareComment(tag.value);
                         }
                     }
 

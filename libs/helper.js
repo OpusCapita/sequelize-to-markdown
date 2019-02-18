@@ -2,6 +2,7 @@
 
 const fs = require('fs');
 const pathJs = require('path');
+const escape = require('escape-html');
 
 module.exports.filterBlacklist = function(toBeFiltered, blacklist)
 {
@@ -64,14 +65,19 @@ module.exports.mkdirp = function(path)
 {
     let current = '';
     const subPaths = pathJs.dirname(path).split(pathJs.sep);
-    
+
     for(const subPath of subPaths)
     {
         current = `${current}${subPath}${pathJs.sep}`;
-        
+
         if(!fs.existsSync(current))
             fs.mkdirSync(current);
         else if(fs.lstatSync(current).isFile())
             throw new Error(`path '${current}' is a File.`);
     }
+};
+
+module.exports.prepareComment = function(comment)
+{
+    return comment ? escape(comment).replace(/\n/g, '<br/>').replace(/ /g, '&nbsp;') : undefined;
 };
