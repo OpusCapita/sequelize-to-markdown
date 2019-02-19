@@ -2,7 +2,6 @@
 
 const fs = require('fs');
 const pathJs = require('path');
-const escape = require('escape-html');
 
 module.exports.filterBlacklist = function(toBeFiltered, blacklist)
 {
@@ -77,7 +76,55 @@ module.exports.mkdirp = function(path)
     }
 };
 
-module.exports.prepareComment = function(comment)
+module.exports.escapeHtmlString = function(string)
 {
-    return comment ? escape(comment).replace(/\n/g, '<br/>').replace(/ /g, '&nbsp;') : undefined;
+    const str = '' + string;
+    const match = /["'&<>\n\s]/.exec(str);
+
+    if(!match) return str;
+
+    let escape;
+    let html = '';
+    let index = 0;
+    let lastIndex = 0;
+
+    for(index = match.index; index < str.length; index++)
+    {
+        switch(str.charCodeAt(index))
+        {
+            case 10: // \n (new line)
+                escape = '<br/>';
+                break;
+            case 32: // space
+                escape = '&nbsp;';
+                break;
+            case 34: // "
+                escape = '&quot;';
+                break;
+            case 38: // &
+                escape = '&amp;';
+                break;
+            case 39: // '
+                escape = '&#39;';
+                break;
+            case 60: // <
+                escape = '&lt;';
+                break;
+            case 62: // >
+                escape = '&gt;';
+                break;
+            default:
+                continue;
+        }
+
+        if(lastIndex !== index)
+        {
+            html += str.substring(lastIndex, index);
+        }
+
+        lastIndex = index + 1;
+        html += escape;
+    }
+
+    return (lastIndex === index) ? html : html + str.substring(lastIndex, index);
 };
