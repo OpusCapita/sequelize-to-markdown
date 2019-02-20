@@ -81,7 +81,7 @@ module.exports.escapeHtmlString = function(string)
     const str = '' + string;
     const match = /["'&<>\n\s]/.exec(str);
 
-    if(!match) return str;
+    if(!match) return string;
 
     let escape;
     let html = '';
