@@ -64,14 +64,67 @@ module.exports.mkdirp = function(path)
 {
     let current = '';
     const subPaths = pathJs.dirname(path).split(pathJs.sep);
-    
+
     for(const subPath of subPaths)
     {
         current = `${current}${subPath}${pathJs.sep}`;
-        
+
         if(!fs.existsSync(current))
             fs.mkdirSync(current);
         else if(fs.lstatSync(current).isFile())
             throw new Error(`path '${current}' is a File.`);
     }
+};
+
+module.exports.escapeHtmlString = function(string)
+{
+    const str = '' + string;
+    const match = /["'&<>\n\s]/.exec(str);
+
+    if(!match) return string;
+
+    let escape;
+    let html = '';
+    let index = 0;
+    let lastIndex = 0;
+
+    for(index = match.index; index < str.length; index++)
+    {
+        switch(str.charCodeAt(index))
+        {
+            case 10: // \n (new line)
+                escape = '<br/>';
+                break;
+            case 32: // space
+                escape = '&nbsp;';
+                break;
+            case 34: // "
+                escape = '&quot;';
+                break;
+            case 38: // &
+                escape = '&amp;';
+                break;
+            case 39: // '
+                escape = '&#39;';
+                break;
+            case 60: // <
+                escape = '&lt;';
+                break;
+            case 62: // >
+                escape = '&gt;';
+                break;
+            default:
+                continue;
+        }
+
+        if(lastIndex !== index)
+        {
+            html += str.substring(lastIndex, index);
+        }
+
+        lastIndex = index + 1;
+        html += escape;
+    }
+
+    return (lastIndex === index) ? html : html + str.substring(lastIndex, index);
 };
