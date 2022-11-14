@@ -6,6 +6,15 @@ Sequelize to Markdown is a simple tool to document the data structure of [sequel
 
 This module provides a comfortable APIs and a full featured command line client.
 
+# WARNING
+
+Please, do NOT use it. This module has several importain issues:
+
+- Markdown is meant to be manually edited, not auto-generated - you should NOT push markdown to wiki automatically
+- This module is very outdated - if you are still using it for whatever you should think again
+- This module has messy dependencies and sqlite3 is used for tests but is marked as dependency - and it is not that simple to install it on newer node images
+- No one is maitaining this repository for years
+
 ### Install
 
 ```
