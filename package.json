@@ -1,7 +1,7 @@
 {
   "name": "sequelize-to-markdown",
   "version": "1.2.6",
-  "description": "Create Markdown documentations out of sequelize models.",
+  "description": "DEPRECATED Create Markdown documentations out of sequelize models.",
   "main": "libs/",
   "scripts": {
     "doc": "node_modules/.bin/jsdoc2md libs/index.js > wiki/Home.md",
@@ -29,13 +29,13 @@
     "extend": "^3.0.0",
     "jsdoc-api": "^4.0.0",
     "nunjucks": "^3.0.0",
-    "sequelize": "^4.37.10",
-    "sqlite3": "^4.0.0"
+    "sequelize": "^4.37.10"
   },
   "devDependencies": {
     "coveralls": "^3.0.1",
     "jsdoc-to-markdown": "^3.0.4",
     "mocha": "^5.2.0",
-    "nyc": "^13.0.0"
+    "nyc": "^13.0.0",
+    "sqlite3": "^4.0.0"
   }
 }
